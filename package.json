@@ -1,0 +1,16 @@
+{
+  "name": "slg-demo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Mobile SLG Game Demo - Age of Discovery (1300-1700)",
+  "scripts": {
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "build:client": "cd client && npm run build",
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}

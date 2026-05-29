@@ -1,0 +1,53 @@
+{
+  "mapBuildings": [
+    { "type": 1, "name": "Pine Forest", "resource": "wood", "level": 1, "yield": { "wood": 20 }, "durability": 200, "defense": 10 },
+    { "type": 1, "name": "Dense Forest", "resource": "wood", "level": 2, "yield": { "wood": 35 }, "durability": 300, "defense": 15 },
+    { "type": 1, "name": "Ancient Forest", "resource": "wood", "level": 3, "yield": { "wood": 55 }, "durability": 400, "defense": 20 },
+    { "type": 1, "name": "Primeval Forest", "resource": "wood", "level": 4, "yield": { "wood": 80 }, "durability": 500, "defense": 25 },
+    { "type": 1, "name": "Teak Forest", "resource": "wood", "level": 5, "yield": { "wood": 110 }, "durability": 600, "defense": 30 },
+    { "type": 2, "name": "Iron Vein", "resource": "iron", "level": 1, "yield": { "iron": 15 }, "durability": 250, "defense": 15 },
+    { "type": 2, "name": "Iron Mine", "resource": "iron", "level": 2, "yield": { "iron": 28 }, "durability": 350, "defense": 20 },
+    { "type": 2, "name": "Rich Iron Deposit", "resource": "iron", "level": 3, "yield": { "iron": 45 }, "durability": 450, "defense": 25 },
+    { "type": 2, "name": "Deep Iron Shaft", "resource": "iron", "level": 4, "yield": { "iron": 65 }, "durability": 550, "defense": 30 },
+    { "type": 2, "name": "Legendary Forge", "resource": "iron", "level": 5, "yield": { "iron": 90 }, "durability": 650, "defense": 35 },
+    { "type": 3, "name": "Farmland", "resource": "food", "level": 1, "yield": { "food": 25 }, "durability": 180, "defense": 8 },
+    { "type": 3, "name": "Wheat Field", "resource": "food", "level": 2, "yield": { "food": 40 }, "durability": 280, "defense": 12 },
+    { "type": 3, "name": "Rice Paddy", "resource": "food", "level": 3, "yield": { "food": 60 }, "durability": 380, "defense": 16 },
+    { "type": 3, "name": "Plantation", "resource": "food", "level": 4, "yield": { "food": 85 }, "durability": 480, "defense": 20 },
+    { "type": 3, "name": "Royal Estate", "resource": "food", "level": 5, "yield": { "food": 120 }, "durability": 580, "defense": 24 },
+    { "type": 4, "name": "Gold Nugget", "resource": "gold", "level": 1, "yield": { "gold": 8 }, "durability": 300, "defense": 20 },
+    { "type": 4, "name": "Gold Seam", "resource": "gold", "level": 2, "yield": { "gold": 15 }, "durability": 400, "defense": 25 },
+    { "type": 4, "name": "Gold Mine", "resource": "gold", "level": 3, "yield": { "gold": 25 }, "durability": 500, "defense": 30 },
+    { "type": 4, "name": "Deep Gold Mine", "resource": "gold", "level": 4, "yield": { "gold": 38 }, "durability": 600, "defense": 35 },
+    { "type": 4, "name": "El Dorado", "resource": "gold", "level": 5, "yield": { "gold": 55 }, "durability": 700, "defense": 40 },
+    { "type": 5, "name": "Stone Quarry", "resource": "stone", "level": 1, "yield": { "stone": 18 }, "durability": 220, "defense": 12 },
+    { "type": 5, "name": "Marble Quarry", "resource": "stone", "level": 2, "yield": { "stone": 32 }, "durability": 320, "defense": 18 },
+    { "type": 5, "name": "Granite Quarry", "resource": "stone", "level": 3, "yield": { "stone": 50 }, "durability": 420, "defense": 24 },
+    { "type": 5, "name": "Obsidian Quarry", "resource": "stone", "level": 4, "yield": { "stone": 72 }, "durability": 520, "defense": 30 },
+    { "type": 5, "name": "Crystal Cavern", "resource": "stone", "level": 5, "yield": { "stone": 100 }, "durability": 620, "defense": 36 }
+  ],
+  "fortressUpgrades": [
+    { "level": 1, "cost": { "wood": 500, "stone": 300 }, "time": 60, "durability": 500, "defense": 20, "armyCapacity": 1 },
+    { "level": 2, "cost": { "wood": 1200, "stone": 800, "iron": 200 }, "time": 180, "durability": 800, "defense": 35, "armyCapacity": 2 },
+    { "level": 3, "cost": { "wood": 3000, "stone": 2000, "iron": 500 }, "time": 360, "durability": 1200, "defense": 50, "armyCapacity": 3 },
+    { "level": 4, "cost": { "wood": 8000, "stone": 5000, "iron": 1500 }, "time": 720, "durability": 1800, "defense": 70, "armyCapacity": 4 },
+    { "level": 5, "cost": { "wood": 20000, "stone": 12000, "iron": 4000, "gold": 500 }, "time": 1440, "durability": 2500, "defense": 100, "armyCapacity": 5 }
+  ],
+  "cityFacilities": [
+    { "id": "main_hall", "name": "Governor's Palace", "type": 0, "maxLevel": 25, "desc": "Center of governance. Unlocks other buildings." },
+    { "id": "barracks", "name": "Barracks", "type": 13, "maxLevel": 25, "desc": "Train and conscript soldiers." },
+    { "id": "command_post", "name": "War Council", "type": 14, "maxLevel": 25, "desc": "Increases army slots and command capability." },
+    { "id": "market", "name": "Trade Post", "type": 15, "maxLevel": 25, "desc": "Enables resource trading and increases tax income." },
+    { "id": "tavern", "name": "Tavern", "type": 16, "maxLevel": 25, "desc": "Recruit generals. Higher level = better generals." },
+    { "id": "warehouse", "name": "Warehouse", "type": 17, "maxLevel": 25, "desc": "Increases resource storage capacity." },
+    { "id": "academy", "name": "Academy", "type": 18, "maxLevel": 25, "desc": "Research technologies and unlock skills." },
+    { "id": "wall", "name": "City Walls", "type": 19, "maxLevel": 25, "desc": "Increases city defense and durability." }
+  ],
+  "npcArmies": [
+    { "tileLevel": 1, "soldiers": 200, "generalLevel": 1 },
+    { "tileLevel": 2, "soldiers": 500, "generalLevel": 3 },
+    { "tileLevel": 3, "soldiers": 1000, "generalLevel": 5 },
+    { "tileLevel": 4, "soldiers": 2000, "generalLevel": 8 },
+    { "tileLevel": 5, "soldiers": 4000, "generalLevel": 12 }
+  ]
+}
