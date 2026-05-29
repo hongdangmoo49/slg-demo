@@ -97,8 +97,8 @@ router.post('/login', (req, res) => {
   }
 
   // Update last login
-  db.prepare('UPDATE users SET last_login = datetime("now") WHERE id = ?').run(user.id);
-  db.prepare('UPDATE roles SET last_online = datetime("now") WHERE id = ?').run(role.id);
+  db.prepare("UPDATE users SET last_login = datetime('now') WHERE id = ?").run(user.id);
+  db.prepare("UPDATE roles SET last_online = datetime('now') WHERE id = ?").run(role.id);
 
   // Generate JWT
   const token = jwt.sign(

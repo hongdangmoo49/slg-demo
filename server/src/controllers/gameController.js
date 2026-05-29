@@ -223,7 +223,7 @@ function registerHandlers(io) {
 
       // Update last online
       const db = getDB();
-      db.prepare('UPDATE roles SET last_online = datetime("now") WHERE id = ?').run(socket.roleId);
+      db.prepare("UPDATE roles SET last_online = datetime('now') WHERE id = ?").run(socket.roleId);
     });
   });
 }
