@@ -10,6 +10,7 @@ const generalManager = require('../logic/generalManager');
 const armyManager = require('../logic/armyManager');
 const allianceManager = require('../logic/allianceManager');
 const cityManager = require('../logic/cityManager');
+const researchManager = require('../logic/researchManager');
 const connMgr = require('../net/connectionManager');
 const jwt = require('jsonwebtoken');
 
@@ -237,6 +238,18 @@ function registerHandlers(io) {
     socket.on('tech:list', () => {
       const techs = cityManager.getTechnologies();
       socket.emit('tech:list', { technologies: techs });
+    });
+
+    // === Research ===
+    socket.on('research:tree', () => {
+      const tree = researchManager.getTechTree(socket.roleId);
+      socket.emit('research:tree', tree);
+    });
+
+    socket.on('research:start', (data) => {
+      const { techId } = data;
+      const result = researchManager.startResearch(socket.roleId, techId);
+      socket.emit('research:startResult', result);
     });
 
     // === War Reports ===

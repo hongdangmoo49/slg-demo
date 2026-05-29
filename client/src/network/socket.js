@@ -57,6 +57,9 @@ class NetworkManager {
       'alliance:list', 'alliance:createResult', 'alliance:joinResult',
       'alliance:exitResult', 'alliance:info', 'alliance:myAlliance',
       'chat:message',
+      'city:facilitiesList', 'city:upgradeResult',
+      'research:tree', 'research:startResult', 'research:completed',
+      'war:reportList', 'war:reportDetail',
     ];
 
     events.forEach(event => {
