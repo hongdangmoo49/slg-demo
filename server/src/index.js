@@ -98,10 +98,10 @@ app.get('*', (req, res) => {
 registerHandlers(io);
 
 // Periodic resource yield update (every 5 min)
+const connMgr = require('./net/connectionManager');
 setInterval(() => {
   for (const [roleId] of resourceManager.resources) {
     const res = resourceManager.getResources(roleId);
-    connMgr = require('./net/connectionManager');
     connMgr.pushToRole(roleId, 'resource:update', res);
   }
 }, 300000);

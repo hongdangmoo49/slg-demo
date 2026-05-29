@@ -175,10 +175,44 @@ export class GameScene extends Phaser.Scene {
       }
     });
 
-    // Zoom with mouse wheel / pinch
+    // Zoom with mouse wheel
     this.input.on('wheel', (pointer, gos, dx, dy) => {
       const newZoom = Phaser.Math.Clamp(cam.zoom - dy * 0.001, 0.3, 2);
       cam.setZoom(newZoom);
+    });
+
+    // Pinch-to-zoom for mobile
+    let lastPinchDist = 0;
+    this.input.on('pointerdown', (pointer) => {
+      if (this.input.pointer1.isDown && this.input.pointer2.isDown) {
+        lastPinchDist = Phaser.Math.Distance.Between(
+          this.input.pointer1.x, this.input.pointer1.y,
+          this.input.pointer2.x, this.input.pointer2.y
+        );
+      }
+    });
+
+    this.input.on('pointermove', () => {
+      if (this.input.pointer1.isDown && this.input.pointer2.isDown) {
+        const dist = Phaser.Math.Distance.Between(
+          this.input.pointer1.x, this.input.pointer1.y,
+          this.input.pointer2.x, this.input.pointer2.y
+        );
+        if (lastPinchDist > 0) {
+          const scale = dist / lastPinchDist;
+          const newZoom = Phaser.Math.Clamp(cam.zoom * scale, 0.3, 2);
+          cam.setZoom(newZoom);
+        }
+        lastPinchDist = dist;
+        this._draggingUI = true; // prevent pan during pinch
+      }
+    });
+
+    this.input.on('pointerup', () => {
+      if (!this.input.pointer1.isDown && !this.input.pointer2.isDown) {
+        lastPinchDist = 0;
+        this._draggingUI = false;
+      }
     });
   }
 
