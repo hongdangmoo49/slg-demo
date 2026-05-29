@@ -494,6 +494,16 @@ export class GameScene extends Phaser.Scene {
 
       rx += Math.floor((width - 130) / 5);
     }
+
+    // Chat icon in top bar (right side)
+    const chatHit = this.add.rectangle(width - 24, 16, 36, 28, 0x000000, 0);
+    chatHit.setInteractive({ useHandCursor: true });
+    chatHit.setScrollFactor(0);
+    const chatIcon = this.add.text(width - 24, 16, '💬', {
+      fontSize: '16px',
+    }).setOrigin(0.5).setScrollFactor(0);
+    chatHit.on('pointerdown', () => this._showChatPanel());
+    topBar.add([chatHit, chatIcon]);
   }
 
   _createBottomBar(width, height) {
@@ -515,7 +525,7 @@ export class GameScene extends Phaser.Scene {
       { icon: '⚔️', label: 'Army', action: () => this._showArmyPanel() },
       { icon: '👤', label: 'Heroes', action: () => this._showGeneralPanel() },
       { icon: '🏰', label: 'Alliance', action: () => this._showAlliancePanel() },
-      { icon: '💬', label: 'Chat', action: () => this._showChatPanel() },
+      { icon: '📋', label: 'Reports', action: () => this._showWarReportPanel() },
       { icon: '📦', label: 'Collect', action: () => network.collectResources() },
     ];
 
@@ -582,6 +592,94 @@ export class GameScene extends Phaser.Scene {
 
       container.add([btn, icon]);
     }
+
+    // Minimap (bottom-right, above zoom buttons)
+    this._createMinimap(width, height);
+  }
+
+  _createMinimap(width, height) {
+    const mapSize = Math.min(120, width * 0.25);
+    const mx = width - mapSize - 8;
+    const my = height - 80 - mapSize - 10;
+    const scale = mapSize / 100;
+
+    const mmContainer = this.add.container(0, 0);
+    mmContainer.setDepth(95);
+    mmContainer.setScrollFactor(0);
+
+    // Background
+    const mmBg = this.add.graphics();
+    mmBg.fillStyle(0x0D47A1, 0.8);
+    mmBg.fillRect(mx, my, mapSize, mapSize);
+    mmBg.lineStyle(2, UI.ACCENT, 0.6);
+    mmBg.strokeRect(mx, my, mapSize, mapSize);
+    mmContainer.add(mmBg);
+
+    // Terrain dots (sparse - just major features)
+    const mmTerrain = this.add.graphics();
+    for (const [key, sprite] of Object.entries(this.mapTiles)) {
+      const td = sprite.tileData;
+      if (!td || td.terrain.type === TILE.PLAIN || td.terrain.type === TILE.WATER) continue;
+      const px = mx + td.x * scale;
+      const py = my + td.y * scale;
+
+      let color = 0x8BC34A;
+      if (td.terrain.type === TILE.FOREST) color = 0x2E7D32;
+      else if (td.terrain.type === TILE.MOUNTAIN) color = 0x795548;
+      else if (td.terrain.type === TILE.FARM) color = 0xFFC107;
+      else if (td.terrain.type === TILE.GOLD_MINE) color = 0xFF9800;
+
+      mmTerrain.fillStyle(color, 0.6);
+      mmTerrain.fillRect(px, py, Math.max(1, scale), Math.max(1, scale));
+    }
+    mmContainer.add(mmTerrain);
+
+    // Player city marker
+    if (this.playerCity) {
+      const cx = mx + this.playerCity.x * scale;
+      const cy = my + this.playerCity.y * scale;
+      const cityDot = this.add.circle(cx, cy, 3, 0xFFC107);
+      mmContainer.add(cityDot);
+    }
+
+    // Viewport rectangle
+    const cam = this.cameras.main;
+    this._minimapViewport = this.add.graphics();
+    this._minimapViewport.lineStyle(1, 0xFFFFFF, 0.8);
+    mmContainer.add(this._minimapViewport);
+
+    this._minimapRect = { mx, my, mapSize, scale };
+    this._updateMinimapViewport();
+
+    // Click on minimap to navigate
+    const hitArea = this.add.rectangle(mx + mapSize / 2, my + mapSize / 2, mapSize, mapSize, 0x000000, 0);
+    hitArea.setInteractive({ useHandCursor: true });
+    hitArea.setScrollFactor(0);
+    hitArea.on('pointerdown', (pointer) => {
+      const lx = pointer.x - mx;
+      const ly = pointer.y - my;
+      const worldX = (lx / scale) * TILE_SIZE;
+      const worldY = (ly / scale) * TILE_SIZE;
+      this.cameras.main.centerOn(worldX, worldY);
+    });
+    mmContainer.add(hitArea);
+
+    this._minimapContainer = mmContainer;
+  }
+
+  _updateMinimapViewport() {
+    if (!this._minimapViewport || !this._minimapRect) return;
+    const { mx, my, mapSize, scale } = this._minimapRect;
+    const cam = this.cameras.main;
+
+    const vx = mx + (cam.scrollX / TILE_SIZE) * scale;
+    const vy = my + (cam.scrollY / TILE_SIZE) * scale;
+    const vw = (cam.width / TILE_SIZE / cam.zoom) * scale;
+    const vh = (cam.height / TILE_SIZE / cam.zoom) * scale;
+
+    this._minimapViewport.clear();
+    this._minimapViewport.lineStyle(1, 0xFFFFFF, 0.8);
+    this._minimapViewport.strokeRect(vx, vy, vw, vh);
   }
 
   _openCityScene() {
@@ -932,6 +1030,83 @@ export class GameScene extends Phaser.Scene {
     this._activePanel = container;
   }
 
+  _showWarReportPanel() {
+    this._closePanel();
+    const { width, height } = this.cameras.main;
+    const panelW = Math.min(340, width - 20);
+    const panelH = Math.min(450, height - 100);
+    const px = (width - panelW) / 2;
+    const py = (height - panelH) / 2;
+
+    const container = this.add.container(0, 0);
+    container.setDepth(200);
+
+    const bg = this.add.graphics();
+    bg.fillStyle(UI.PANEL, 0.98);
+    bg.fillRoundedRect(px, py, panelW, panelH, 12);
+    bg.lineStyle(2, UI.DANGER, 0.5);
+    bg.strokeRoundedRect(px, py, panelW, panelH, 12);
+    container.add(bg);
+
+    const title = this.add.text(px + panelW / 2, py + 16, '📋 War Reports', {
+      fontSize: '17px', color: '#FFC107', fontFamily: 'Georgia, serif',
+    }).setOrigin(0.5);
+    container.add(title);
+
+    const reportList = this.add.container(0, 0);
+    container.add(reportList);
+
+    // Request reports
+    network.socket?.emit('war:reports');
+    const h = network.on('war:reportList', (data) => {
+      reportList.removeAll(true);
+      let yOff = py + 42;
+
+      if (!data.reports || data.reports.length === 0) {
+        const empty = this.add.text(px + panelW / 2, py + 100, 'No battle reports yet.\nSend your army to attack!', {
+          fontSize: '13px', color: '#B0BEC5', align: 'center',
+        }).setOrigin(0.5);
+        reportList.add(empty);
+        return;
+      }
+
+      for (const report of data.reports.slice(0, 6)) {
+        const isWin = report.result === 'win';
+        const isAttacker = report.attacker_id === this.roleData?.id;
+        const dateStr = report.created_at ? report.created_at.split(' ')[0] : '';
+        const rowBg = this.add.graphics();
+        rowBg.fillStyle(isWin ? 0x1B5E20 : report.result === 'lose' ? 0xB71C1C : 0x4A148C, 0.3);
+        rowBg.fillRoundedRect(px + 10, yOff, panelW - 20, 48, 6);
+        reportList.add(rowBg);
+
+        const resultIcon = isWin ? '🏆' : report.result === 'lose' ? '💀' : '⚖️';
+        const role = isAttacker ? 'Attack' : 'Defense';
+        const info = this.add.text(px + 18, yOff + 6,
+          `${resultIcon} ${role} — ${report.result.toUpperCase()} | ${dateStr}`, {
+            fontSize: '13px', color: '#FFFFFF',
+          });
+        reportList.add(info);
+
+        const detail = this.add.text(px + 18, yOff + 26,
+          `Durability dmg: ${report.durability_damage || 0}`, {
+            fontSize: '10px', color: '#B0BEC5',
+          });
+        reportList.add(detail);
+
+        yOff += 56;
+      }
+    });
+    this.events.once('shutdown', () => network.off('war:reportList', h));
+
+    const closeBtn = this._createUIButton(px + 10, py + panelH - 54, panelW - 20, 44, 'Close', 0x616161, () => {
+      network.off('war:reportList', h);
+      this._closePanel();
+    });
+    container.add(closeBtn);
+
+    this._activePanel = container;
+  }
+
   _showChatPanel() {
     this._closePanel();
     const { width, height } = this.cameras.main;
@@ -1136,6 +1311,18 @@ export class GameScene extends Phaser.Scene {
         msg.text.destroy();
         this._chatMessages.splice(i, 1);
       }
+    }
+
+    // Update minimap viewport
+    this._updateMinimapViewport();
+
+    // Periodic map refresh (every 15 seconds)
+    if (this.playerCity && (!this._lastMapRefresh || now - this._lastMapRefresh > 15000)) {
+      this._lastMapRefresh = now;
+      const cam = this.cameras.main;
+      const cx = Math.floor((cam.scrollX + cam.width / 2 / cam.zoom) / TILE_SIZE);
+      const cy = Math.floor((cam.scrollY + cam.height / 2 / cam.zoom) / TILE_SIZE);
+      network.scanBlock(cx, cy, 15);
     }
   }
 }
