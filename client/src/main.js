@@ -7,6 +7,7 @@ import Phaser from 'phaser';
 import { BootScene } from './scenes/BootScene.js';
 import { LoginScene } from './scenes/LoginScene.js';
 import { GameScene } from './scenes/GameScene.js';
+import { CityScene } from './scenes/CityScene.js';
 
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
@@ -20,7 +21,7 @@ const config = {
     mode: Phaser.Scale.RESIZE,
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
-  scene: [BootScene, LoginScene, GameScene],
+  scene: [BootScene, LoginScene, GameScene, CityScene],
   render: {
     antialias: false,
     pixelArt: false,

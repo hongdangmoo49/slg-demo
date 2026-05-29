@@ -511,7 +511,7 @@ export class GameScene extends Phaser.Scene {
 
     // Menu buttons
     const buttons = [
-      { icon: '🗺️', label: 'Map', action: () => this._closePanel() },
+      { icon: '🏙️', label: 'City', action: () => this._openCityScene() },
       { icon: '⚔️', label: 'Army', action: () => this._showArmyPanel() },
       { icon: '👤', label: 'Heroes', action: () => this._showGeneralPanel() },
       { icon: '🏰', label: 'Alliance', action: () => this._showAlliancePanel() },
@@ -582,6 +582,15 @@ export class GameScene extends Phaser.Scene {
 
       container.add([btn, icon]);
     }
+  }
+
+  _openCityScene() {
+    if (!this.playerCity) {
+      this._showToast('No city found', true);
+      return;
+    }
+    this._closePanel();
+    this.scene.switch('CityScene', { cityId: this.playerCity.id });
   }
 
   _updateResourceBar() {

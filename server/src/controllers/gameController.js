@@ -9,6 +9,7 @@ const resourceManager = require('../logic/resourceManager');
 const generalManager = require('../logic/generalManager');
 const armyManager = require('../logic/armyManager');
 const allianceManager = require('../logic/allianceManager');
+const cityManager = require('../logic/cityManager');
 const connMgr = require('../net/connectionManager');
 const jwt = require('jsonwebtoken');
 
@@ -214,6 +215,50 @@ function registerHandlers(io) {
     socket.on('role:myCity', () => {
       const city = mapManager.getMainCity(socket.roleId);
       socket.emit('role:mainCity', city);
+    });
+
+    // === City Facilities ===
+    socket.on('city:facilities', (data) => {
+      const { cityId } = data;
+      const facilities = cityManager.getFacilities(cityId);
+      socket.emit('city:facilitiesList', { cityId, facilities });
+    });
+
+    socket.on('city:upgradeFacility', (data) => {
+      const { cityId, facilityId } = data;
+      const result = cityManager.upgradeFacility(socket.roleId, cityId, facilityId);
+      socket.emit('city:upgradeResult', result);
+      if (result.success) {
+        network.getResources(); // refresh resources after spending
+      }
+    });
+
+    // === Technologies ===
+    socket.on('tech:list', () => {
+      const techs = cityManager.getTechnologies();
+      socket.emit('tech:list', { technologies: techs });
+    });
+
+    // === War Reports ===
+    socket.on('war:reports', () => {
+      const db = getDB();
+      const reports = db.prepare(
+        'SELECT * FROM war_reports WHERE attacker_id = ? OR defender_id = ? ORDER BY created_at DESC LIMIT 20'
+      ).all(socket.roleId, socket.roleId);
+      socket.emit('war:reportList', { reports });
+    });
+
+    socket.on('war:reportDetail', (data) => {
+      const db = getDB();
+      const report = db.prepare('SELECT * FROM war_reports WHERE id = ?').get(data.reportId);
+      if (report) {
+        report.rounds = JSON.parse(report.rounds || '[]');
+        report.attacker_snapshot = JSON.parse(report.attacker_snapshot || '{}');
+        report.defender_snapshot = JSON.parse(report.defender_snapshot || '{}');
+        report.is_read = 1;
+        db.prepare('UPDATE war_reports SET is_read = 1 WHERE id = ?').run(data.reportId);
+      }
+      socket.emit('war:reportDetail', report);
     });
 
     // === Disconnect ===

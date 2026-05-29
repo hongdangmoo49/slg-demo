@@ -17,6 +17,7 @@ const resourceManager = require('./logic/resourceManager');
 const generalManager = require('./logic/generalManager');
 const armyManager = require('./logic/armyManager');
 const allianceManager = require('./logic/allianceManager');
+const cityManager = require('./logic/cityManager');
 const { registerHandlers } = require('./controllers/gameController');
 const authRouter = require('./controllers/authController');
 
@@ -40,6 +41,7 @@ resourceManager.init();
 generalManager.init();
 armyManager.init();
 allianceManager.init();
+cityManager.init();
 console.log('Managers initialized');
 
 // === Express & Socket.io ===

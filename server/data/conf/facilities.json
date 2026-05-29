@@ -1,0 +1,120 @@
+{
+  "facilities": {
+    "main_hall": {
+      "name": "Governor's Palace",
+      "icon": "🏛️",
+      "maxLevel": 25,
+      "levels": [
+        { "level": 1, "cost": {}, "time": 0, "bonus": {} },
+        { "level": 2, "cost": { "wood": 200, "stone": 100 }, "time": 30, "bonus": { "buildSpeed": 0.02 } },
+        { "level": 3, "cost": { "wood": 400, "stone": 200 }, "time": 60, "bonus": { "buildSpeed": 0.04 } },
+        { "level": 4, "cost": { "wood": 800, "stone": 400 }, "time": 120, "bonus": { "buildSpeed": 0.06 } },
+        { "level": 5, "cost": { "wood": 1500, "stone": 800 }, "time": 240, "bonus": { "buildSpeed": 0.08, "taxRate": 0.05 } }
+      ]
+    },
+    "barracks": {
+      "name": "Barracks",
+      "icon": "⚔️",
+      "maxLevel": 25,
+      "levels": [
+        { "level": 1, "cost": {}, "time": 0, "bonus": {} },
+        { "level": 2, "cost": { "wood": 200, "iron": 50 }, "time": 30, "bonus": { "conscriptSpeed": 0.05 } },
+        { "level": 3, "cost": { "wood": 400, "iron": 100 }, "time": 60, "bonus": { "conscriptSpeed": 0.10 } },
+        { "level": 4, "cost": { "wood": 800, "iron": 200 }, "time": 120, "bonus": { "conscriptSpeed": 0.15, "soldierLimit": 500 } },
+        { "level": 5, "cost": { "wood": 1500, "iron": 400 }, "time": 240, "bonus": { "conscriptSpeed": 0.20, "soldierLimit": 1000 } }
+      ]
+    },
+    "command_post": {
+      "name": "War Council",
+      "icon": "🛡️",
+      "maxLevel": 25,
+      "levels": [
+        { "level": 1, "cost": {}, "time": 0, "bonus": { "armyTeams": 2 } },
+        { "level": 2, "cost": { "wood": 300, "iron": 100 }, "time": 45, "bonus": { "armyTeams": 2 } },
+        { "level": 3, "cost": { "wood": 600, "iron": 200 }, "time": 90, "bonus": { "armyTeams": 3 } },
+        { "level": 4, "cost": { "wood": 1200, "iron": 400 }, "time": 180, "bonus": { "armyTeams": 3, "force": 5 } },
+        { "level": 5, "cost": { "wood": 2400, "iron": 800 }, "time": 360, "bonus": { "armyTeams": 4, "force": 10 } }
+      ]
+    },
+    "market": {
+      "name": "Trade Post",
+      "icon": "🏪",
+      "maxLevel": 25,
+      "levels": [
+        { "level": 1, "cost": {}, "time": 0, "bonus": {} },
+        { "level": 2, "cost": { "wood": 150, "stone": 100 }, "time": 30, "bonus": { "goldYield": 5 } },
+        { "level": 3, "cost": { "wood": 300, "stone": 200 }, "time": 60, "bonus": { "goldYield": 10 } },
+        { "level": 4, "cost": { "wood": 600, "stone": 400 }, "time": 120, "bonus": { "goldYield": 20, "taxRate": 0.03 } },
+        { "level": 5, "cost": { "wood": 1200, "stone": 800 }, "time": 240, "bonus": { "goldYield": 40, "taxRate": 0.05 } }
+      ]
+    },
+    "tavern": {
+      "name": "Tavern",
+      "icon": "🍺",
+      "maxLevel": 25,
+      "levels": [
+        { "level": 1, "cost": {}, "time": 0, "bonus": { "drawDiscount": 0 } },
+        { "level": 2, "cost": { "wood": 200, "gold": 100 }, "time": 30, "bonus": { "drawDiscount": 0.05 } },
+        { "level": 3, "cost": { "wood": 400, "gold": 200 }, "time": 60, "bonus": { "drawDiscount": 0.10 } },
+        { "level": 4, "cost": { "wood": 800, "gold": 400 }, "time": 120, "bonus": { "drawDiscount": 0.15, "starBonus": 0.05 } },
+        { "level": 5, "cost": { "wood": 1500, "gold": 800 }, "time": 240, "bonus": { "drawDiscount": 0.20, "starBonus": 0.10 } }
+      ]
+    },
+    "warehouse": {
+      "name": "Warehouse",
+      "icon": "📦",
+      "maxLevel": 25,
+      "levels": [
+        { "level": 1, "cost": {}, "time": 0, "bonus": { "capacity": 50000 } },
+        { "level": 2, "cost": { "wood": 200, "stone": 150 }, "time": 30, "bonus": { "capacity": 75000 } },
+        { "level": 3, "cost": { "wood": 400, "stone": 300 }, "time": 60, "bonus": { "capacity": 110000 } },
+        { "level": 4, "cost": { "wood": 800, "stone": 600 }, "time": 120, "bonus": { "capacity": 160000 } },
+        { "level": 5, "cost": { "wood": 1500, "stone": 1200 }, "time": 240, "bonus": { "capacity": 250000 } }
+      ]
+    },
+    "academy": {
+      "name": "Academy",
+      "icon": "📜",
+      "maxLevel": 25,
+      "levels": [
+        { "level": 1, "cost": {}, "time": 0, "bonus": { "researchSpeed": 0 } },
+        { "level": 2, "cost": { "wood": 300, "iron": 100, "gold": 50 }, "time": 45, "bonus": { "researchSpeed": 0.05 } },
+        { "level": 3, "cost": { "wood": 600, "iron": 200, "gold": 100 }, "time": 90, "bonus": { "researchSpeed": 0.10 } },
+        { "level": 4, "cost": { "wood": 1200, "iron": 400, "gold": 200 }, "time": 180, "bonus": { "researchSpeed": 0.15, "strategy": 5 } },
+        { "level": 5, "cost": { "wood": 2400, "iron": 800, "gold": 400 }, "time": 360, "bonus": { "researchSpeed": 0.20, "strategy": 10 } }
+      ]
+    },
+    "wall": {
+      "name": "City Walls",
+      "icon": "🏰",
+      "maxLevel": 25,
+      "levels": [
+        { "level": 1, "cost": {}, "time": 0, "bonus": { "durability": 1000, "defense": 10 } },
+        { "level": 2, "cost": { "stone": 200, "iron": 50 }, "time": 30, "bonus": { "durability": 1500, "defense": 15 } },
+        { "level": 3, "cost": { "stone": 400, "iron": 100 }, "time": 60, "bonus": { "durability": 2200, "defense": 22 } },
+        { "level": 4, "cost": { "stone": 800, "iron": 200 }, "time": 120, "bonus": { "durability": 3200, "defense": 30 } },
+        { "level": 5, "cost": { "stone": 1500, "iron": 400 }, "time": 240, "bonus": { "durability": 5000, "defense": 45 } }
+      ]
+    }
+  },
+  "technologies": {
+    "military": [
+      { "id": "mil_01", "name": "Iron Weapons", "era": "1300", "cost": { "iron": 500, "gold": 200 }, "time": 300, "bonus": { "force": 5 }, "requires": [] },
+      { "id": "mil_02", "name": "Shield Wall", "era": "1300", "cost": { "iron": 800, "gold": 300 }, "time": 600, "bonus": { "defense": 5 }, "requires": ["mil_01"] },
+      { "id": "mil_03", "name": "Cavalry Charge", "era": "1400", "cost": { "iron": 1500, "gold": 500 }, "time": 1200, "bonus": { "speed": 8 }, "requires": ["mil_02"] },
+      { "id": "mil_04", "name": "Gunpowder Arms", "era": "1500", "cost": { "iron": 3000, "gold": 1000 }, "time": 2400, "bonus": { "force": 15, "destroy": 10 }, "requires": ["mil_03"] },
+      { "id": "mil_05", "name": "Star Fortification", "era": "1600", "cost": { "iron": 5000, "stone": 3000, "gold": 2000 }, "time": 4800, "bonus": { "defense": 20, "durability": 2000 }, "requires": ["mil_04"] }
+    ],
+    "economy": [
+      { "id": "eco_01", "name": "Crop Rotation", "era": "1300", "cost": { "gold": 200 }, "time": 300, "bonus": { "foodYield": 10 }, "requires": [] },
+      { "id": "eco_02", "name": "Watermill", "era": "1400", "cost": { "wood": 800, "gold": 300 }, "time": 600, "bonus": { "woodYield": 10, "foodYield": 5 }, "requires": ["eco_01"] },
+      { "id": "eco_03", "name": "Banking", "era": "1500", "cost": { "gold": 1000 }, "time": 1200, "bonus": { "goldYield": 20 }, "requires": ["eco_02"] },
+      { "id": "eco_04", "name": "Mercantilism", "era": "1600", "cost": { "gold": 3000, "iron": 1000 }, "time": 2400, "bonus": { "goldYield": 30, "taxRate": 0.10 }, "requires": ["eco_03"] }
+    ],
+    "naval": [
+      { "id": "nav_01", "name": "Caravel Design", "era": "1400", "cost": { "wood": 1000, "gold": 500 }, "time": 600, "bonus": { "armySpeed": 0.1 }, "requires": [] },
+      { "id": "nav_02", "name": "Galleon", "era": "1500", "cost": { "wood": 2000, "iron": 500, "gold": 800 }, "time": 1200, "bonus": { "armySpeed": 0.15, "soldierLimit": 500 }, "requires": ["nav_01"] },
+      { "id": "nav_03", "name": "Ship of the Line", "era": "1600", "cost": { "wood": 4000, "iron": 1500, "gold": 2000 }, "time": 2400, "bonus": { "armySpeed": 0.2, "force": 10 }, "requires": ["nav_02"] }
+    ]
+  }
+}
